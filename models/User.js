@@ -14,7 +14,8 @@ const userSchema = new Schema({
         enum:["ADMIN","USER"],
         default:"USER"
     },
-    bio:String
+    bio:String,
+    products:[Schema.Types.ObjectId]
 
 }, {
     timestamps:{

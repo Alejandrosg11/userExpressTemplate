@@ -4,6 +4,9 @@ const User = require("../models/User");
 const multer = require("multer");
 const uploads = multer({dest: './public/uploads'});
 
+//borrame
+const Product = require("../models/Product");
+
 function isAuthenticated(req,res, next){
     if(req.isAuthenticated()){
         return res.redirect('/profile')
@@ -18,8 +21,14 @@ function isNotAuth(req,res,next){
     return res.redirect('/login');
 }
 
-router.get('/profile', isNotAuth, (req,res)=>{
-    res.render('auth/profile', req.user);
+router.get('/profile', isNotAuth, (req,res, next)=>{
+    Product.find({user:req.user._id})
+    .then(products=>{
+        req.user.productos = products;
+        res.render('auth/profile', req.user);
+    })
+    .catch(e=>next(e))
+    
 })
 
 router.post('/profile', uploads.single('profilePic'), (req,res, next)=>{
