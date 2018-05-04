@@ -35,10 +35,15 @@
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">
-  <div style="display:flex;" class="micontainer tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-      
+  <div style="display:flex;flex-wrap:wrap" class="micontainer tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-{{#each productos}}
+      
+      <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Agregar producto
+        </button>      
+
+{{#each products}}
       <div class="card" style="width: 18rem;">
         <img class="card-img-top" src="{{this.photos.[0]}}" alt="Card image cap">
         <div class="card-body">
@@ -50,11 +55,7 @@
 {{/each}}
 
 
-      
-      <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Agregar producto
-        </button>
+
 
 
   </div>

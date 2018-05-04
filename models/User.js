@@ -15,7 +15,10 @@ const userSchema = new Schema({
         default:"USER"
     },
     bio:String,
-    products:[Schema.Types.ObjectId]
+    products:[{
+        type:Schema.Types.ObjectId,
+        ref:"Product"
+    }]
 
 }, {
     timestamps:{

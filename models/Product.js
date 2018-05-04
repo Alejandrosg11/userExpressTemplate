@@ -2,11 +2,18 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const productSchema = new Schema({
+    active:{
+        type:Boolean,
+        default:false
+    },
     name: String,
     desc: String,
     price: String,
     photos:[String],
-    user:Schema.Types.ObjectId,
+    user:{
+        type:Schema.Types.ObjectId,
+        ref:"User"
+    },
     comments:[Schema.Types.ObjectId]
 
 },  {

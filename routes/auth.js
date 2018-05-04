@@ -22,10 +22,10 @@ function isNotAuth(req,res,next){
 }
 
 router.get('/profile', isNotAuth, (req,res, next)=>{
-    Product.find({user:req.user._id})
-    .then(products=>{
-        req.user.productos = products;
-        res.render('auth/profile', req.user);
+    User.findById(req.user._id)
+    .populate('products')
+    .then(user=>{
+        res.render('auth/profile', user);
     })
     .catch(e=>next(e))
     
