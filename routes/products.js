@@ -3,8 +3,44 @@ const Product = require('../models/Product');
 const User = require('../models/User');
 const updload = require('multer')({dest: './public/pics'});
 
+function checkIfAdmin(req,res,next){
+    if(!req.isAuthenticated()) res.redirect('/login');
+    if(req.user.role === "ADMIN") return next();
+    return res.redirect('/products');
+}
+
+
+router.get('/:id/edit', (req,res, next)=>{
+    Product.findById(req.params.id)
+    .then(product=>{
+        res.render('products/edit', {product});
+    })
+    .catch(e=>next(e))
+})
+
+router.post('/:id/edit', (req,res, next)=>{
+    if(req.body.active) req.body.active = true;
+    Product.findByIdAndUpdate(req.params.id, req.body)
+    .then(()=>{
+        res.redirect('/products/admin');
+    })
+    .catch(e=>next(e))
+})
+
+
+
+router.get('/admin', checkIfAdmin,(req,res, next)=>{
+    Promise.all([User.find(), Product.find()])
+    .then(r=>{
+        res.render('products/admin', {users:r[0], products:r[1]});
+    })
+    .catch(e=>next(e));
+})
+
+router.post('/admin', (req,res)=>{})
+
 router.get('/', (req,res,next)=>{
-    Product.find()
+    Product.find({active:true})
     .populate('user')
     .then(products=>res.render('products/list', {products}))
     .catch(e=>next(e));
