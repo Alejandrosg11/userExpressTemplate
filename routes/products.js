@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Product = require('../models/Product');
 const User = require('../models/User');
+const Comment = require('../models/Comment');
 const updload = require('multer')({dest: './public/pics'});
 
 function checkIfAdmin(req,res,next){
@@ -37,7 +38,30 @@ router.get('/admin', checkIfAdmin,(req,res, next)=>{
     .catch(e=>next(e));
 })
 
-router.post('/admin', (req,res)=>{})
+//router.post('/admin', (req,res)=>{})
+
+router.post('/:id', (req,res)=>{
+    req.body.user = req.user._id;
+    req.body.product = req.params.id;
+    Comment.create(req.body)
+    .then((comment=>{
+        return Product.findByIdAndUpdate(req.params.id, {$push:{comments:comment}})
+    }))
+    .then(product=>{
+        res.redirect('/products/' + req.params.id);
+    })
+    .catch(e=>next(e));
+});
+
+router.get('/:id', (req,res)=>{
+    Product.findById(req.params.id)
+    .populate('comments')
+    .populate('user')
+    .then(product=>{
+        res.render('products/detail', {product})
+    })
+    .catch(e=>next(e));
+});
 
 router.get('/', (req,res,next)=>{
     Product.find({active:true})

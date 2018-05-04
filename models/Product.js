@@ -14,7 +14,10 @@ const productSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref:"User"
     },
-    comments:[Schema.Types.ObjectId]
+    comments:[{
+        type:Schema.Types.ObjectId,
+        ref:"Comment"
+    }]
 
 },  {
     timestamps:{
