@@ -1,8 +1,45 @@
 body {
-  padding: 50px;
+  padding: 0px;
+  margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.portada{
+  background-image: url('https://www.pcprofessionale.it/wp-content/uploads/2015/11/win-10-2.jpg');
+  background-size:cover;
+  background-position: center;
+  height: 300px;
+  width: 100%; 
+  position: relative;
+}
+
+.portada img{
+  position: absolute;
+  bottom: -50px;
+  width: 100px;
+  left: calc(50% - 50px);
+  border-radius:50%;
+  background-color: white; 
+}
+
+.portada h2{
+  position: absolute;
+  bottom: -100px;
+  left: calc(50% - 35px);
+}
+
+.datos{
+  padding-top: 150px;
+  margin: 0 auto;
+  position: relative;
+  width: 60%;
+}
+
+.datos input, textarea{
+  margin-top:20px; 
 }
 
 a {
   color: #00B7FF;
 }
+

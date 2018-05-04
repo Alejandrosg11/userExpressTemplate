@@ -4,6 +4,7 @@ const PassportLocalMongoose = require("passport-local-mongoose");
 
 const userSchema = new Schema({
     username: String,
+    profilePic:String,
     email: {
         type:String,
         required:true
@@ -12,7 +13,8 @@ const userSchema = new Schema({
         type:String,
         enum:["ADMIN","USER"],
         default:"USER"
-    }
+    },
+    bio:String
 
 }, {
     timestamps:{

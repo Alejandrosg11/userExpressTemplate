@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const passport = require("passport");
 const User = require("../models/User");
+const multer = require("multer");
+const uploads = multer({dest: './public/uploads'});
 
 function isAuthenticated(req,res, next){
     if(req.isAuthenticated()){
@@ -8,6 +10,27 @@ function isAuthenticated(req,res, next){
     }
     return next();
 }
+
+function isNotAuth(req,res,next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    return res.redirect('/login');
+}
+
+router.get('/profile', isNotAuth, (req,res)=>{
+    res.render('auth/profile', req.user);
+})
+
+router.post('/profile', uploads.single('profilePic'), (req,res, next)=>{
+    req.body.profilePic = '/uploads/' + req.file.filename;
+    User.findByIdAndUpdate(req.user._id, req.body)
+    .then(()=>{
+        req.user.message = "Actualizado";
+        res.render('auth/profile', req.user);
+    })
+    .catch(e=>next(e));
+});
 
 router.get('/logout', (req,res)=>{
     req.logout();

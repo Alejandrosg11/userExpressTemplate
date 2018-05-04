@@ -1,0 +1,30 @@
+<section>
+    <article class="portada">
+
+        {{#if profilePic}}
+        <img id="profilePic" src="{{profilePic}}" alt="">
+        {{else}}
+        <img id="profilePic" src="https://pbs.twimg.com/profile_images/719587633353986048/U6ub_oiK_400x400.jpg" alt="">
+        {{/if}}
+        <h2>{{username}}</h2>
+    </article>
+    {{#if message}}<h1>{{message}}</h1>{{/if}}
+    <article class="datos">
+        <form action="/profile" method="post" enctype="multipart/form-data">
+            <input class="form-control" value="{{username}}" type="text" name="username" placeholder="tu username"/>
+            <input class="form-control" value="{{email}}" type="email" name="email" placeholder="tu mail"/>
+            <textarea class="form-control" maxlength="10" name="bio" type="text">{{bio}}</textarea>
+            <input  id="file" type="file" name="profilePic" hidden/>
+            <input class="btn btn-success" type="submit" value="Guardar">
+        </form>
+
+    </article>
+
+</section>
+
+<script>
+    document.querySelector('#profilePic')
+        .addEventListener('click', ()=>{
+            document.querySelector('#file').click();
+        })
+</script>
