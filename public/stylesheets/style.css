@@ -39,4 +39,11 @@ body {
 a {
   color: #00B7FF; }
 
+.lista {
+  margin: 0 auto;
+  position: relative;
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap; }
+
 /*# sourceMappingURL=style.css.map */

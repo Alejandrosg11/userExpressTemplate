@@ -3,6 +3,13 @@ const Product = require('../models/Product');
 const User = require('../models/User');
 const updload = require('multer')({dest: './public/pics'});
 
+router.get('/', (req,res,next)=>{
+    Product.find()
+    .populate('user')
+    .then(products=>res.render('products/list', {products}))
+    .catch(e=>next(e));
+});
+
 router.post('/new', updload.array('photos',6),(req,res, next)=>{
     req.body.photos = [];
     for(let pic of req.files){
